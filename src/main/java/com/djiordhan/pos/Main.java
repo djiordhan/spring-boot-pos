@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -35,43 +34,46 @@ public class Main {
         return args -> {
             long productCount = productRepository.count();
             if (productCount == 0) {
-                logger.info("No products found, seeding database with 10 products.");
-                for (int i = 1; i <= 10; i++) {
-                    Product product = new Product(
-                            "Product " + i,
-                            "Description for product " + i,
-                            BigDecimal.valueOf(10.0 + i),
-                            "imagePath" + i + ".jpg"
-                    );
-                    productRepository.save(product);
-                }
+                logger.info("No products found, seeding database with specified products.");
+                List<Product> products = List.of(
+                    new Product("Burger", "Delicious burger", BigDecimal.valueOf(50.00), "/product-images/burger.jpeg"),
+                    new Product("Donut", "Tasty donut", BigDecimal.valueOf(20.00), "/product-images/donut.jpeg"),
+                    new Product("Sandwich", "Fresh sandwich", BigDecimal.valueOf(40.00), "/product-images/sandwich.jpeg"),
+                    new Product("Cinnamon Roll", "Sweet cinnamon roll", BigDecimal.valueOf(50.00), "/product-images/cinnamonroll.jpeg"),
+                    new Product("Crosaint", "Flaky crosaint", BigDecimal.valueOf(20.00), "/product-images/crosaint.jpeg"),
+                    new Product("Espresso", "Strong espresso", BigDecimal.valueOf(40.00), "/product-images/espresso.jpeg"),
+                    new Product("Frappe", "Cold frappe", BigDecimal.valueOf(40.00), "/product-images/frappe.jpeg"),
+                    new Product("Milk Tea", "Refreshing milk tea", BigDecimal.valueOf(40.00), "/product-images/milktea.jpeg"),
+                    new Product("Black Coffee", "Bold black coffee", BigDecimal.valueOf(40.00), "/product-images/blackcoffee.jpeg")
+                );
+                productRepository.saveAll(products);
                 logger.info("Product seeding completed.");
             } else {
                 logger.info("Products found, no product seeding necessary.");
             }
 
-            long transactionCount = transactionRepository.count();
-            if (transactionCount == 0) {
-                logger.info("No transactions found, seeding database with 5 transactions.");
-                for (int i = 1; i <= 5; i++) {
-                    List<Cart> carts = new ArrayList<>();
-                    for (int j = 1; j <= 3; j++) {
-                        Cart cart = new Cart("Product " + j, 1, BigDecimal.valueOf(10.0 + j));
-                        carts.add(cart);
-                    }
-                    Transaction transaction = new Transaction(
-                            BigDecimal.valueOf(100.0 + i),
-                            BigDecimal.valueOf(120.0 + i),
-                            BigDecimal.valueOf(20.0),
-                            LocalDateTime.now().minusDays(i)
-                    );
-                    transaction.setCarts(carts); // This sets the transaction reference in each cart
-                    transactionRepository.save(transaction);
-                }
-                logger.info("Transaction seeding completed.");
-            } else {
-                logger.info("Transactions found, no transaction seeding necessary.");
-            }
+            // long transactionCount = transactionRepository.count();
+            // if (transactionCount == 0) {
+            //     logger.info("No transactions found, seeding database with sample transactions.");
+            //     for (int i = 1; i <= 5; i++) {
+            //         List<Cart> carts = List.of(
+            //             new Cart("Burger", 1, BigDecimal.valueOf(50.00)),
+            //             new Cart("Donut", 1, BigDecimal.valueOf(20.00)),
+            //             new Cart("Sandwich", 1, BigDecimal.valueOf(40.00))
+            //         );
+            //         Transaction transaction = new Transaction(
+            //                 BigDecimal.valueOf(110.00),
+            //                 BigDecimal.valueOf(130.00),
+            //                 BigDecimal.valueOf(20.00),
+            //                 LocalDateTime.now().minusDays(i)
+            //         );
+            //         transaction.setCarts(carts); // This sets the transaction reference in each cart
+            //         transactionRepository.save(transaction);
+            //     }
+            //     logger.info("Transaction seeding completed.");
+            // } else {
+            //     logger.info("Transactions found, no transaction seeding necessary.");
+            // }
         };
     }
 }

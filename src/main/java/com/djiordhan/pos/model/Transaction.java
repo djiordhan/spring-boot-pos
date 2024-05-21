@@ -5,6 +5,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Transaction {
 
@@ -17,6 +19,7 @@ public class Transaction {
     private LocalDateTime transactionDate;
 
     @OneToMany(mappedBy = "transaction", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Cart> carts;
 
     // Default constructor for JPA only

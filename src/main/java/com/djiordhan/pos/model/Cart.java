@@ -3,6 +3,8 @@ package com.djiordhan.pos.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Cart {
 
@@ -15,6 +17,7 @@ public class Cart {
 
     @ManyToOne
     @JoinColumn(name = "transaction_id")
+    @JsonBackReference
     private Transaction transaction;
 
     // Default constructor for JPA only
