@@ -78,5 +78,8 @@ public class Transaction {
 
     public void setCarts(List<Cart> carts) {
         this.carts = carts;
+        for (Cart cart : carts) {
+            cart.setTransaction(this);
+        }
     }
 }
