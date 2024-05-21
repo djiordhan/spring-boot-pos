@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.djiordhan.demo.model.Book;
-import com.djiordhan.demo.repository.BookRepository;
+import com.djiordhan.model.Book;
+import com.djiordhan.repository.BookRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,9 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @SpringBootApplication
 @RestController
-public class DemoApplication {
+public class Main {
     public static void main(String[] args) {
-      SpringApplication.run(DemoApplication.class, args);
+      SpringApplication.run(Main.class, args);
     }
 
     @Autowired

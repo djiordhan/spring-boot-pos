@@ -1,4 +1,4 @@
-package com.djiordhan.demo.model;
+package com.djiordhan.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +10,7 @@ import java.time.LocalDate;
 
 @Entity
 public class Book {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;

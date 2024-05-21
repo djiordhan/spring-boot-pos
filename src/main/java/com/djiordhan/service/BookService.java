@@ -1,7 +1,7 @@
-package com.djiordhan.demo.service;
+package com.djiordhan.service;
 
-import com.djiordhan.demo.model.Book;
-import com.djiordhan.demo.repository.BookRepository;
+import com.djiordhan.model.Book;
+import com.djiordhan.repository.BookRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

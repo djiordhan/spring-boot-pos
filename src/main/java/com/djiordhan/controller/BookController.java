@@ -1,7 +1,7 @@
-package com.djiordhan.demo.controller;
+package com.djiordhan.controller;
 
-import com.djiordhan.demo.model.Book;
-import com.djiordhan.demo.service.BookService;
+import com.djiordhan.model.Book;
+import com.djiordhan.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
