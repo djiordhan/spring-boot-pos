@@ -1,62 +1,77 @@
 package com.djiordhan.pos;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.djiordhan.pos.model.Book;
-import com.djiordhan.pos.repository.BookRepository;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.djiordhan.pos.model.Product;
+import com.djiordhan.pos.model.Transaction;
+import com.djiordhan.pos.model.Cart;
+import com.djiordhan.pos.repository.ProductRepository;
+import com.djiordhan.pos.repository.TransactionRepository;
 
 @SpringBootApplication
 @RestController
 public class Main {
+
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
-      SpringApplication.run(Main.class, args);
+        SpringApplication.run(Main.class, args);
     }
 
-    @Autowired
-    BookRepository bookRepository;
+    @Bean
+    CommandLineRunner seedDatabase(ProductRepository productRepository, TransactionRepository transactionRepository) {
+        return args -> {
+            long productCount = productRepository.count();
+            if (productCount == 0) {
+                logger.info("No products found, seeding database with 10 products.");
+                for (int i = 1; i <= 10; i++) {
+                    Product product = new Product(
+                            "Product " + i,
+                            "Description for product " + i,
+                            BigDecimal.valueOf(10.0 + i),
+                            "imagePath" + i + ".jpg"
+                    );
+                    productRepository.save(product);
+                }
+                logger.info("Product seeding completed.");
+            } else {
+                logger.info("Products found, no product seeding necessary.");
+            }
 
-    @GetMapping("/hello")
-    public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
-      return String.format("Hello %s!", name);
-    }
-
-    @GetMapping("/insert")
-    public String insert() {
-
-      System.out.println("Running.....");
-
-            Book b1 = new Book("Book A",
-                    BigDecimal.valueOf(9.99),
-                    LocalDate.of(2023, 8, 31));
-            Book b2 = new Book("Book B",
-                    BigDecimal.valueOf(19.99),
-                    LocalDate.of(2023, 7, 31));
-            Book b3 = new Book("Book C",
-                    BigDecimal.valueOf(29.99),
-                    LocalDate.of(2023, 6, 10));
-            Book b4 = new Book("Book D",
-                    BigDecimal.valueOf(39.99),
-                    LocalDate.of(2023, 5, 5));
-
-            bookRepository.saveAll(List.of(b1, b2, b3, b4));
-
-            
-      return "inserted";
-    }
-
-    @GetMapping("/getAllBooks")
-    public List<Book> getAllBooks() {
-        return bookRepository.findAll();
+            long transactionCount = transactionRepository.count();
+            if (transactionCount == 0) {
+                logger.info("No transactions found, seeding database with 5 transactions.");
+                for (int i = 1; i <= 5; i++) {
+                    List<Cart> carts = new ArrayList<>();
+                    for (int j = 1; j <= 3; j++) {
+                        Cart cart = new Cart("Product " + j, 1, BigDecimal.valueOf(10.0 + j));
+                        carts.add(cart);
+                    }
+                    Transaction transaction = new Transaction(
+                            BigDecimal.valueOf(100.0 + i),
+                            BigDecimal.valueOf(120.0 + i),
+                            BigDecimal.valueOf(20.0),
+                            LocalDateTime.now().minusDays(i)
+                    );
+                    transaction.setCarts(carts); // This sets the transaction reference in each cart
+                    transactionRepository.save(transaction);
+                }
+                logger.info("Transaction seeding completed.");
+            } else {
+                logger.info("Transactions found, no transaction seeding necessary.");
+            }
+        };
     }
 }
