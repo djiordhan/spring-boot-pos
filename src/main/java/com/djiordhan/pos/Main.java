@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.djiordhan.model.Book;
-import com.djiordhan.repository.BookRepository;
+import com.djiordhan.pos.model.Book;
+import com.djiordhan.pos.repository.BookRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.djiordhan.model;
+package com.djiordhan.pos.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

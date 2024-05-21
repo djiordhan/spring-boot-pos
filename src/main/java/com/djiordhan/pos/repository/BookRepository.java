@@ -1,10 +1,10 @@
-package com.djiordhan.repository;
+package com.djiordhan.pos.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.djiordhan.model.Book;
+import com.djiordhan.pos.model.Book;
 
 import java.time.LocalDate;
 import java.util.List;
