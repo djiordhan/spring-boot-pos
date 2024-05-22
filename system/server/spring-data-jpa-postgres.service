@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 User=ubuntu
-ExecStart=/usr/bin/java -jar spring-data-jpa-postgres.jar \
+ExecStart=/usr/bin/java -jar /home/spring-data-jpa-postgres.jar \
   --server.port=8087 \
   --spring.datasource.url=jdbc:postgresql://localhost:5432/spring_boot_pos \
   --spring.datasource.username=remis \
